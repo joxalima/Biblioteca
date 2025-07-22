@@ -1,4 +1,4 @@
-﻿
+﻿@model List<Livro>
 @{
     ViewData["Title"] = "Index";
 }
@@ -23,28 +23,23 @@
                 </tr>
             </thead>
             <tbody>
+            @if (Model != null && Model.Any())
+            {
+                foreach(Livro livro in Model)
+                {    
                 <tr>
-                    <td>LVR001</td>
-                    <td>O Senhor dos Anéis</td>
-                    <td>J.R.R. Tolkien</td>
-                    <td>Fantasia</td>
-                    <td>HarperCollins</td>
+                    <td>@livro.Codigo</td>
+                    <td>@livro.Titulo</td>
+                    <td>@livro.Autor</td>
+                    <td>@livro.Categoria</td>
+                    <td>@livro.Editora</td>
                     <td>
-                        <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editarLivroModal" data-codigo="LVR001">Editar</button>
-                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#confirmDeleteLivroModal" data-codigo="LVR001">Excluir</button>
+                        <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editarLivroModal" data-codigo="@livro.Codigo">Editar</button>
+                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#confirmDeleteLivroModal" data-codigo="@livro.Codigo">Excluir</button>
                     </td>
                 </tr>
-                <tr>
-                    <td>LVR002</td>
-                    <td>1984</td>
-                    <td>George Orwell</td>
-                    <td>Ficção Distópica</td>
-                    <td>Companhia das Letras</td>
-                    <td>
-                        <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editarLivroModal" data-codigo="LVR002">Editar</button>
-                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#confirmDeleteLivroModal" data-codigo="LVR002">Excluir</button>
-                    </td>
-                </tr>
+                }
+            }
             </tbody>
         </table>
     </div>

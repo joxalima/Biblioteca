@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using BibliotecaMVC.Data;
 using BibliotecaMVC.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,9 +9,10 @@ namespace BibliotecaMVC.Controllers
     {
         
 
-        public IActionResult Index()
-        {
-            return View();
+        public IActionResult Index(){
+            LivroRepository livroRepository = new LivroRepository();
+            List<Livro> livros = livroRepository.Listar();
+            return View(livros);
         }
 
         public IActionResult Cadastrar()
