@@ -1,0 +1,109 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+    <div class="container mt-4">
+        <h1>Livros</h1>
+
+    <div class="mb-3">
+        <a href="/Livro/Cadastrar" class="btn btn-primary">Cadastrar Novo Livro</a>
+    </div>
+
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Código</th>
+                    <th scope="col">Título</th>
+                    <th scope="col">Autor</th>
+                    <th scope="col">Categoria</th>
+                    <th scope="col">Editora</th>
+                    <th scope="col">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>LVR001</td>
+                    <td>O Senhor dos Anéis</td>
+                    <td>J.R.R. Tolkien</td>
+                    <td>Fantasia</td>
+                    <td>HarperCollins</td>
+                    <td>
+                        <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editarLivroModal" data-codigo="LVR001">Editar</button>
+                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#confirmDeleteLivroModal" data-codigo="LVR001">Excluir</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>LVR002</td>
+                    <td>1984</td>
+                    <td>George Orwell</td>
+                    <td>Ficção Distópica</td>
+                    <td>Companhia das Letras</td>
+                    <td>
+                        <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editarLivroModal" data-codigo="LVR002">Editar</button>
+                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#confirmDeleteLivroModal" data-codigo="LVR002">Excluir</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    <!--<div class="modal fade" id="editarLivroModal" tabindex="-1" aria-labelledby="editarLivroModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editarLivroModalLabel">Editar Livro</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formEditarLivro" action="/Livros/Atualizar" method="post">
+                        <div class="mb-3">
+                            <label for="editCodigoLivro" class="form-label">Código do Livro</label>
+                            <input type="text" class="form-control" id="editCodigoLivro" name="Codigo" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editTituloLivro" class="form-label">Título</label>
+                            <input type="text" class="form-control" id="editTituloLivro" name="Titulo" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editAutorLivro" class="form-label">Autor</label>
+                            <input type="text" class="form-control" id="editAutorLivro" name="Autor" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editCategoriaLivro" class="form-label">Categoria</label>
+                            <input type="text" class="form-control" id="editCategoriaLivro" name="Categoria" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editEditoraLivro" class="form-label">Editora</label>
+                            <input type="text" class="form-control" id="editEditoraLivro" name="Editora" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Atualizar Livro</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>-->
+
+    <div class="modal fade" id="confirmDeleteLivroModal" tabindex="-1" aria-labelledby="confirmDeleteLivroModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmDeleteLivroModalLabel">Confirmar Exclusão</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Tem certeza de que deseja excluir o livro com código: <span id="modalLivroCodigo"></span>?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <a href="#" id="confirmDeleteLivroButton" class="btn btn-danger">Excluir</a>
+                </div>
+            </div>
+        </div>
+    </div>
+

@@ -1,0 +1,166 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container mt-4">
+    <h1>Empréstimos</h1>
+
+    <div class="mb-3">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#novoEmprestimoModal">Registrar Novo Empréstimo</button>
+    </div>
+
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Código</th>
+                <th scope="col">Item Emprestado</th>
+                <th scope="col">Data Retirada</th>
+                <th scope="col">Data Entrega</th>
+                <th scope="col">Disponibilidade</th>
+                <th scope="col">Aluno</th>
+                <th scope="col">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>EMP001</td>
+                <td>Livro: O Pequeno Príncipe</td>
+                <td>15/07/2025</td>
+                <td>25/07/2025</td>
+                <td><span class="badge bg-danger">Emprestado</span></td>
+                <td>Maria Silva (RA: 12345)</td>
+                <td>
+                    <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editarEmprestimoModal" data-codigo="EMP001">Editar</button>
+                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#confirmDeleteEmprestimoModal" data-codigo="EMP001">Excluir</button>
+                </td>
+            </tr>
+            <tr>
+                <td>EMP002</td>
+                <td>Projetor Epson</td>
+                <td>18/07/2025</td>
+                <td>18/07/2025</td>
+                <td><span class="badge bg-success">Disponível</span></td>
+                <td>João Oliveira (RA: 67890)</td>
+                <td>
+                    <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editarEmprestimoModal" data-codigo="EMP002">Editar</button>
+                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#confirmDeleteEmprestimoModal" data-codigo="EMP002">Excluir</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="modal fade" id="novoEmprestimoModal" tabindex="-1" aria-labelledby="novoEmprestimoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="novoEmprestimoModalLabel">Registrar Novo Empréstimo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formNovoEmprestimo" action="/Emprestimos/Salvar" method="post">
+                    <div class="mb-3">
+                        <label for="codigoEmprestimo" class="form-label">Código do Empréstimo</label>
+                        <input type="text" class="form-control" id="codigoEmprestimo" name="CodigoEmprestimo" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="itemEmprestado" class="form-label">Item Emprestado</label>
+                        <input type="text" class="form-control" id="itemEmprestado" name="ItemEmprestado" placeholder="Ex: Livro, Projetor, Notebook" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="dataRetirada" class="form-label">Data de Retirada</label>
+                        <input type="date" class="form-control" id="dataRetirada" name="DataRetirada" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="dataEntrega" class="form-label">Data de Entrega Prevista</label>
+                        <input type="date" class="form-control" id="dataEntrega" name="DataEntrega" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="disponibilidade" class="form-label">Disponibilidade</label>
+                        <select class="form-select" id="disponibilidade" name="Disponibilidade" required>
+                            <option value="Disponível">Disponível</option>
+                            <option value="Emprestado">Emprestado</option>
+                            <option value="Manutenção">Manutenção</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="alunoRA" class="form-label">RA do Aluno</label>
+                        <input type="text" class="form-control" id="alunoRA" name="AlunoRA" placeholder="RA do aluno" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Salvar Empréstimo</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editarEmprestimoModal" tabindex="-1" aria-labelledby="editarEmprestimoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editarEmprestimoModalLabel">Editar Empréstimo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formEditarEmprestimo" action="/Emprestimos/Atualizar" method="post">
+                    <div class="mb-3">
+                        <label for="editCodigoEmprestimo" class="form-label">Código do Empréstimo</label>
+                        <input type="text" class="form-control" id="editCodigoEmprestimo" name="CodigoEmprestimo" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editItemEmprestado" class="form-label">Item Emprestado</label>
+                        <input type="text" class="form-control" id="editItemEmprestado" name="ItemEmprestado" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editDataRetirada" class="form-label">Data de Retirada</label>
+                        <input type="date" class="form-control" id="editDataRetirada" name="DataRetirada" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editDataEntrega" class="form-label">Data de Entrega Prevista</label>
+                        <input type="date" class="form-control" id="editDataEntrega" name="DataEntrega" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editDisponibilidade" class="form-label">Disponibilidade</label>
+                        <select class="form-select" id="editDisponibilidade" name="Disponibilidade" required>
+                            <option value="Disponível">Disponível</option>
+                            <option value="Emprestado">Emprestado</option>
+                            <option value="Manutenção">Manutenção</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editAlunoRA" class="form-label">RA do Aluno</label>
+                        <input type="text" class="form-control" id="editAlunoRA" name="AlunoRA" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Atualizar Empréstimo</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="confirmDeleteEmprestimoModal" tabindex="-1" aria-labelledby="confirmDeleteEmprestimoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteEmprestimoModalLabel">Confirmar Exclusão</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Tem certeza de que deseja excluir o empréstimo com código: <span id="modalEmprestimoCodigo"></span>?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <a href="#" id="confirmDeleteEmprestimoButton" class="btn btn-danger">Excluir</a>
+            </div>
+        </div>
+    </div>
+</div>
+
