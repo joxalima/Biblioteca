@@ -11,7 +11,7 @@ namespace BibliotecaMVC.Controllers
 
         public IActionResult Index(){
             LivroRepository livroRepository = new LivroRepository();
-            List<Livro> livros = livroRepository.Listar();
+            List<LivroModel> livros = livroRepository.Listar();
             return View(livros);
         }
 

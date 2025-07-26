@@ -1,4 +1,4 @@
-﻿@model List<Livro>
+﻿@model List<LivroModel>
 @{
     ViewData["Title"] = "Index";
 }
@@ -25,7 +25,7 @@
             <tbody>
             @if (Model != null && Model.Any())
             {
-                foreach(Livro livro in Model)
+                foreach(LivroModel livro in Model)
                 {    
                 <tr>
                     <td>@livro.Codigo</td>

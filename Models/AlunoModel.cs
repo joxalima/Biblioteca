@@ -1,8 +1,10 @@
 ﻿namespace BibliotecaMVC.Models
 {
-    public class Aluno  
+    public class AlunoModel  
     {
-        public Aluno(string nome, string ra, string email, string telefone, DateTime dataNascimento)
+        public AlunoModel() { }
+
+        public AlunoModel(string nome, string ra, string email, string telefone, DateTime dataNascimento)
         {
             RA = ra;
             Nome = nome;

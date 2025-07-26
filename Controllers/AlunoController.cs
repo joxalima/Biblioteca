@@ -12,13 +12,22 @@ namespace BibliotecaMVC.Controllers
         public IActionResult Index()
         {
             AlunoRepository alunoRepository = new AlunoRepository();
-            List<Aluno> alunos = alunoRepository.Listar();
+            List<AlunoModel> alunos = alunoRepository.Listar();
             return View(alunos);
         }
 
         public IActionResult Cadastrar()
         {
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult Salvar(AlunoModel aluno)
+        {
+            AlunoRepository alunoRep = new AlunoRepository();
+            alunoRep.Salvar(aluno);
+            TempData["MensagemSucesso"] = "Aluno cadastrado com sucesso";
+            return RedirectToAction("Index");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

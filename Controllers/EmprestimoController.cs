@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using BibliotecaMVC.Data;
+using BibliotecaMVC.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BibliotecaMVC.Controllers
@@ -8,7 +10,9 @@ namespace BibliotecaMVC.Controllers
         // GET: EmprestimoController
         public ActionResult Index()
         {
-            return View();
+            EmprestimoRepository emprestimoRepository = new EmprestimoRepository();
+            List<EmprestimoModel> emprestimos = emprestimoRepository.Listar();
+            return View(emprestimos);
         }
 
         // GET: EmprestimoController/Details/5

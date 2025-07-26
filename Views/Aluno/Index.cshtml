@@ -1,11 +1,19 @@
 ﻿
-@model List<Aluno>
+@model List<AlunoModel>
 @{
     ViewData["Title"] = "Index";
 }
 
 <div class="container mt-4">
     <h1>Aluno</h1>
+
+    @if(TempData["MensagemSucesso"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["MensagemSucesso"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+        </div>
+    }
 
     <div class="mb-3">
         <a href="/Aluno/Cadastrar" class="btn btn-primary">Cadastrar Novo Aluno</a>
@@ -22,7 +30,7 @@
 
     @if (Model != null && Model.Any())
         {
-            foreach(Aluno aluno in Model)
+            foreach(AlunoModel aluno in Model)
             {
                 <tbody>
                     <tr>

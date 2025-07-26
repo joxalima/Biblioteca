@@ -1,9 +1,9 @@
 ﻿namespace BibliotecaMVC.Models
 {
 
-    public class Livro
+    public class LivroModel
     {
-        public Livro(string codigo, string titulo, string autor, string categoria, string editora, bool disponivel ) {
+        public LivroModel(string codigo, string titulo, string autor, string categoria, string editora, bool disponivel ) {
             Codigo = codigo;
             Titulo = titulo;
             Autor = autor;
