@@ -7,12 +7,17 @@ namespace BibliotecaMVC.Controllers
 {
     public class AlunoController : Controller
     {
-        
+        private readonly AlunoRepository _alunoRep;
+
+        public AlunoController()
+        {
+            _alunoRep = new AlunoRepository();
+        }
+
 
         public IActionResult Index()
         {
-            AlunoRepository alunoRepository = new AlunoRepository();
-            List<AlunoModel> alunos = alunoRepository.Listar();
+            List<AlunoModel> alunos = _alunoRep.Listar();
             return View(alunos);
         }
 
@@ -21,11 +26,28 @@ namespace BibliotecaMVC.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult Remover(string ra)
+        {
+            try 
+            {
+                _alunoRep.Remover(ra);
+                TempData["MensagemSucesso"] = "Aluno removido com sucesso!";
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                TempData["MensagemErro"] = "Ocorreu um erro: Não foi possivel remover o aluno!";
+                return RedirectToAction("Index");
+            }
+
+           
+        }
+
         [HttpPost]
         public IActionResult Salvar(AlunoModel aluno)
         {
-            AlunoRepository alunoRep = new AlunoRepository();
-            alunoRep.Salvar(aluno);
+            _alunoRep.Salvar(aluno);
             TempData["MensagemSucesso"] = "Aluno cadastrado com sucesso";
             return RedirectToAction("Index");
         }

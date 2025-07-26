@@ -8,8 +8,8 @@ namespace BibliotecaMVC.Data
         public AlunoModel? Salvar(AlunoModel aluno) {
             return aluno;
         }
-        public AlunoModel? Remover(AlunoModel aluno) {
-            return aluno;
+        public bool Remover(string ra) {
+            return true;
         }
         public AlunoModel Atualizar(AlunoModel aluno) {
             return aluno;
