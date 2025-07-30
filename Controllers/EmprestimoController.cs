@@ -7,11 +7,17 @@ namespace BibliotecaMVC.Controllers
 {
     public class EmprestimoController : Controller
     {
+        private readonly IEmprestimoRepository _empRep;
+
+        public EmprestimoController(IEmprestimoRepository repository)
+        {
+            _empRep = repository;
+        }
+
         // GET: EmprestimoController
         public ActionResult Index()
         {
-            EmprestimoRepository emprestimoRepository = new EmprestimoRepository();
-            List<EmprestimoModel> emprestimos = emprestimoRepository.Listar();
+            List<EmprestimoModel>? emprestimos = _empRep.Listar();
             return View(emprestimos);
         }
 

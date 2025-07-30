@@ -2,34 +2,78 @@
 
 namespace BibliotecaMVC.Data
 {
-    public class EmprestimoRepository
+    public class EmprestimoRepository : IEmprestimoRepository
     {
-        public EmprestimoModel? Salvar(EmprestimoModel emprestimo) {
-            return emprestimo;
+        private readonly BancoContext _repository;
+
+        public EmprestimoRepository(BancoContext repository)
+        {
+            _repository = repository;
         }
-        public EmprestimoModel? Remover(EmprestimoModel emprestimo) {
-            return emprestimo;
+        public EmprestimoModel? Atualizar(EmprestimoModel emprestimo)
+        {
+            try
+            {
+                _repository.Emprestimos.Update(emprestimo);
+                _repository.SaveChanges();
+                return emprestimo;
+            }
+            catch (Exception )
+            {
+                return null;
+            }
         }
-        public EmprestimoModel Atualizar(EmprestimoModel emprestimo) {
-            return emprestimo;
+
+        public EmprestimoModel? Buscar(string codigo)
+        {
+            try
+            {
+                return _repository.Emprestimos.FirstOrDefault(x => x.Codigo == codigo);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
-        public List<EmprestimoModel> Listar() {
-      
-            AlunoRepository alunoRepo = new AlunoRepository();
-            LivroRepository livroRepo = new LivroRepository();
+        public List<EmprestimoModel>? Listar()
+        {
+            try
+            {
+                return _repository.Emprestimos.ToList() ?? [];
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
 
-            List<AlunoModel> alunos = alunoRepo.Listar();
-            List<LivroModel> livros = livroRepo.Listar();
+        public bool Remover(EmprestimoModel emprestimo)
+        {
+            try
+            {
+                _repository.Emprestimos.Remove(emprestimo);
+                _repository.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
 
-            List<EmprestimoModel> emprestimos = new List<EmprestimoModel>
-    {
-        new EmprestimoModel("E001", alunos[0], livros[1], DateTime.Now.AddDays(-7)),
-        new EmprestimoModel("E002", alunos[1], livros[3], DateTime.Now.AddDays(-3)),
-        new EmprestimoModel("E003", alunos[2], livros[4], DateTime.Now.AddDays(-1), DateTime.Now)
-    };
-
-            return emprestimos;
+        public EmprestimoModel? Salvar(EmprestimoModel emprestimo)
+        {
+            try
+            {
+                _repository.Emprestimos.Add(emprestimo);
+                _repository.SaveChanges();
+                return emprestimo;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
     }
 }

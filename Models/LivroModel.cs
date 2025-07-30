@@ -1,8 +1,14 @@
-﻿namespace BibliotecaMVC.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace BibliotecaMVC.Models
 {
 
     public class LivroModel
     {
+        public LivroModel()
+        {
+        }
+
         public LivroModel(string codigo, string titulo, string autor, string categoria, string editora, bool disponivel ) {
             Codigo = codigo;
             Titulo = titulo;
@@ -11,7 +17,8 @@
             Editora = editora;
             Disponivel = disponivel;
 
-        }  
+        }
+        [Key]
         public string Codigo { get; set; }
         public string Titulo { get; set; }
         public string Autor { get; set; }

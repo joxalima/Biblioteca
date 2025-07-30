@@ -1,16 +1,13 @@
 ﻿using BibliotecaMVC.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace BibliotecaMVC.Models
 {
     public class EmprestimoModel
     {
-        public string Codigo { get; set; }
-        public DateTime? DataRetirada { get; set; }
-        public DateTime? DataEntrega {  get; set; }
 
-        public AlunoModel Aluno { get; set; }
+        public EmprestimoModel(){}
 
-        public LivroModel Livro { get; set; }
 public  EmprestimoModel(string codigo, AlunoModel aluno, LivroModel livro, DateTime? dataRetirada, DateTime? dataEntrega = null)
 {
     Codigo = codigo;
@@ -19,9 +16,13 @@ public  EmprestimoModel(string codigo, AlunoModel aluno, LivroModel livro, DateT
     DataRetirada = dataRetirada;
     DataEntrega = dataEntrega;
 }
+        [Key]
+        public string Codigo { get; set; }
+        public DateTime? DataRetirada { get; set; }
+        public DateTime? DataEntrega {  get; set; }
+
+        public AlunoModel Aluno { get; set; }
+
+        public LivroModel Livro { get; set; }
     }
 }
-
-
-    
-

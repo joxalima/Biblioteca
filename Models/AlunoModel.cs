@@ -1,4 +1,6 @@
-﻿namespace BibliotecaMVC.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace BibliotecaMVC.Models
 {
     public class AlunoModel  
     {
@@ -12,7 +14,7 @@
             Telefone = telefone;
             DataNascimento = dataNascimento;
         }
-
+        [Key]
         public string RA {  get; set; }
         public string Nome { get; set; }
         public string Email { get; set; }

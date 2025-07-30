@@ -7,7 +7,13 @@ namespace BibliotecaMVC.Controllers
 {
     public class LivroController : Controller
     {
-        
+
+        private readonly ILivroRepository _livroRep;
+
+        public LivroController(ILivroRepository repository)
+        {
+            _livroRep = repository;
+        }
 
         public IActionResult Index(){
             LivroRepository livroRepository = new LivroRepository();
