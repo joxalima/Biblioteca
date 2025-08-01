@@ -12,6 +12,6 @@ namespace BibliotecaMVC.Data
 
         List<EmprestimoModel>? Listar();
 
-        EmprestimoModel? Buscar(string codigo);
+        EmprestimoModel? Buscar(int codigo);
     }
 }

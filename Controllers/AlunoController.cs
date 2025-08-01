@@ -31,7 +31,9 @@ namespace BibliotecaMVC.Controllers
         {
             try 
             {
-                _alunoRep.Remover(ra);
+                AlunoModel aluno = new AlunoModel();
+                aluno.RA = ra;
+                _alunoRep.Remover(aluno);
                 TempData["MensagemSucesso"] = "Aluno removido com sucesso!";
                 return RedirectToAction("Index");
             }
@@ -41,7 +43,6 @@ namespace BibliotecaMVC.Controllers
                 return RedirectToAction("Index");
             }
 
-           
         }
 
         [HttpPost]

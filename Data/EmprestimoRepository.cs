@@ -1,4 +1,5 @@
 ﻿using BibliotecaMVC.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BibliotecaMVC.Data
 {
@@ -10,6 +11,7 @@ namespace BibliotecaMVC.Data
         {
             _repository = repository;
         }
+
         public EmprestimoModel? Atualizar(EmprestimoModel emprestimo)
         {
             try
@@ -18,17 +20,20 @@ namespace BibliotecaMVC.Data
                 _repository.SaveChanges();
                 return emprestimo;
             }
-            catch (Exception )
+            catch (Exception)
             {
                 return null;
             }
         }
 
-        public EmprestimoModel? Buscar(string codigo)
+        public EmprestimoModel? Buscar(int id)
         {
             try
             {
-                return _repository.Emprestimos.FirstOrDefault(x => x.Codigo == codigo);
+                return _repository.Emprestimos
+                    .Include(e => e.Aluno)
+                    .Include(e => e.Livro)
+                    .FirstOrDefault(x => x.ID == id);
             }
             catch (Exception)
             {
@@ -40,7 +45,10 @@ namespace BibliotecaMVC.Data
         {
             try
             {
-                return _repository.Emprestimos.ToList() ?? [];
+                return _repository.Emprestimos
+                    .Include(e => e.Aluno)
+                    .Include(e => e.Livro)
+                    .ToList() ?? [];
             }
             catch (Exception)
             {
@@ -77,11 +85,3 @@ namespace BibliotecaMVC.Data
         }
     }
 }
-
-
-
-           
-        
-    
-        
-

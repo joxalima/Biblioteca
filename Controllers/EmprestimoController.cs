@@ -8,86 +8,91 @@ namespace BibliotecaMVC.Controllers
     public class EmprestimoController : Controller
     {
         private readonly IEmprestimoRepository _empRep;
+        private readonly ILivroRepository _livroRep;
+        private readonly IAlunoRepository _alunoRep;
 
-        public EmprestimoController(IEmprestimoRepository repository)
+        public EmprestimoController(IEmprestimoRepository empRep, ILivroRepository livroRep, IAlunoRepository alunoRep)
         {
-            _empRep = repository;
+            _livroRep = livroRep;
+            _empRep = empRep;
+            _alunoRep = alunoRep;
         }
 
-        // GET: EmprestimoController
         public ActionResult Index()
         {
             List<EmprestimoModel>? emprestimos = _empRep.Listar();
             return View(emprestimos);
         }
 
-        // GET: EmprestimoController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult EmprestarAluno()
         {
-            return View();
+            List<AlunoModel>? alunos = _alunoRep.Listar();
+            return View(alunos);
         }
 
-        // GET: EmprestimoController/Create
-        public ActionResult Cadastrar()
-        {
-            return View();
-        }
-
-        // POST: EmprestimoController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult SelecionarAluno(string ra)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            if (string.IsNullOrEmpty(ra))
+                return RedirectToAction("EmprestarAluno");
+
+            TempData["RASelecionado"] = ra;
+            return RedirectToAction("EmprestarLivro");
         }
 
-        // GET: EmprestimoController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult EmprestarLivro()
         {
-            return View();
+            var ra = TempData["RASelecionado"]?.ToString();
+            if (string.IsNullOrEmpty(ra))
+                return RedirectToAction("EmprestarAluno");
+
+            var livros = _livroRep.Listar() ?? new List<LivroModel>();
+            ViewBag.RA = ra;
+
+            
+            TempData.Keep("RASelecionado");
+
+            return View(livros);
         }
 
-        // POST: EmprestimoController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        [HttpGet]
+        public ActionResult Salvar(string AlunoRA, string livroCodigo)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+                AlunoModel aluno = new AlunoModel();
+                aluno.RA = AlunoRA;
+                LivroModel livro = new LivroModel();
+                livro.Codigo = livroCodigo;
+                EmprestimoModel emp = new EmprestimoModel();
+                emp.Aluno = aluno;
+                emp.Livro = livro;
+                try
+                {
+                    emp.DataRetirada = DateTime.Now; 
+                    emp.DataEntrega = DateTime.Now.AddDays(7); 
 
-        // GET: EmprestimoController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
 
-        // POST: EmprestimoController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
+                    _empRep.Salvar(emp);
+                    TempData["MensagemSucesso"] = "Empréstimo realizado com sucesso!";
+                    return RedirectToAction("Index");
+                }
+                catch (Exception)
+                {
+                    TempData["MensagemErro"] = "Erro ao realizar empréstimo. Tente novamente.";
+                }
             }
-            catch
-            {
-                return View();
-            }
+
+            
+            var ra = emp.Aluno.RA ?? TempData["RASelecionado"]?.ToString();
+            if (string.IsNullOrEmpty(ra))
+                return RedirectToAction("EmprestarAluno");
+
+            var livros = _livroRep.Listar() ?? new List<LivroModel>();
+            ViewBag.RA = ra;
+            TempData["RASelecionado"] = ra; 
+
+            return View("EmprestarLivro", livros);
         }
     }
 }

@@ -1,0 +1,25 @@
+﻿@model List<LivroModel>
+@{
+    ViewData["Title"] = "Selecionar Livro";
+}
+
+<h2>Selecione um Livro para o Emprestimo</h2>
+
+<form asp-controller="Emprestimo" asp-action="Salvar" method="get">
+    @Html.AntiForgeryToken()
+
+    <input type="hidden" name="RA" value="@ViewBag.RA" />
+
+    <div class="mb-3">
+        <label for="CodigoLivro" class="form-label">Livro</label>
+        <select class="form-select" id="CodigoLivro" name="CodigoLivro" required>
+            <option selected disabled value="">Selecione um livro</option>
+            @foreach (var livro in Model)
+            {
+                <option value="@livro.Codigo">@livro.Titulo</option>
+            }
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Confirmar Empréstimo</button>
+</form>

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BibliotecaMVC.Migrations
 {
     [DbContext(typeof(BancoContext))]
-    [Migration("20250729011602_CriarTabela")]
-    partial class CriarTabela
+    [Migration("20250801020120_CriatTabelaEmprestimos")]
+    partial class CriatTabelaEmprestimos
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -52,8 +52,11 @@ namespace BibliotecaMVC.Migrations
 
             modelBuilder.Entity("BibliotecaMVC.Models.EmprestimoModel", b =>
                 {
-                    b.Property<string>("Codigo")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<string>("AlunoRA")
                         .HasColumnType("nvarchar(450)");
@@ -64,11 +67,14 @@ namespace BibliotecaMVC.Migrations
                     b.Property<DateTime?>("DataRetirada")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("Disponivel")
+                        .HasColumnType("bit");
+
                     b.Property<string>("LivroCodigo")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("Codigo");
+                    b.HasKey("ID");
 
                     b.HasIndex("AlunoRA");
 

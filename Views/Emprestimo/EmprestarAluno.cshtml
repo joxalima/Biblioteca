@@ -1,0 +1,40 @@
+﻿@model List<BibliotecaMVC.Models.AlunoModel>
+@{
+    ViewData["Title"] = "Selecionar Aluno";
+}
+
+<div class="container mt-4">
+    <h2>Selecione o Aluno para o Empréstimo</h2>
+
+    @if (Model != null && Model.Any())
+    {
+        <table class="table table-bordered table-hover mt-3">
+            <thead class="table-light">
+                <tr>
+                    <th>RA</th>
+                    <th>Nome</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var aluno in Model)
+                {
+                    <tr>
+                        <td>@aluno.RA</td>
+                        <td>@aluno.Nome</td>
+                        <td>
+                            <form asp-action="SelecionarAluno" method="post">
+                                <input type="hidden" name="ra" value="@aluno.RA" />
+                                <button type="submit" class="btn btn-primary btn-sm">Selecionar</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-warning">Nenhum aluno cadastrado.</div>
+    }
+</div>
